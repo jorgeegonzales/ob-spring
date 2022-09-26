@@ -15,6 +15,6 @@ El acceso se puede realizar desde Postman o Navegador.
 2.LaptopRepository
 3.LaptopController
     1.Buscar todos las Laptops
-    2.crear un nuevo libro en base de datos
+    2.crear una nueva laptop en base de datos
 
 
