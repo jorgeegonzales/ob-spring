@@ -44,9 +44,9 @@ class LaptopControllerTest {
     @Test
     void findAll() {
         ResponseEntity<Laptop[]> response = testRestTemplate.getForEntity("/api/laptops", Laptop[].class);
-        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(HttpStatus.NO_CONTENT,response.getStatusCode());
 
-        List<Laptop> laptops = Arrays.asList(response.getBody());
+       List<Laptop> laptops = Arrays.asList(response.getBody());
         System.out.println(laptops.size());
     }
 
@@ -82,4 +82,49 @@ class LaptopControllerTest {
         assertEquals(1L,result.getId());
         assertEquals("Lenovo creado desde Spring Test",result.getBrand());
     }
+
+
+    @Test
+    void update() {
+         create();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+        String jsonup = """
+                {
+                    "id": 1,
+                    "brand": "Lenovo",
+                    "model": "Legión 5",
+                    "processor": "AMD RYZEN R5",
+                    "hardDrive": 512,
+                    "ram": 8,
+                    "screenSize": 15.6,
+                    "operatingSystem": "Windows 11 Home - Español",
+                    "madeIn": "China"
+                }
+                """;
+
+        HttpEntity<String> requestup = new HttpEntity<>(jsonup,headers);
+        ResponseEntity<Laptop> responseup = testRestTemplate.exchange("/api/laptops",HttpMethod.PUT,requestup,Laptop.class);
+        Laptop result = responseup.getBody();
+        System.out.println(result.getBrand());
+
+        assertEquals(1L,result.getId());
+        assertEquals("Lenovo",result.getBrand());
+    }
+
+    @Test
+    void delete() {
+        create();
+        ResponseEntity<Laptop> response = testRestTemplate.exchange("/api/laptops/1",HttpMethod.DELETE,null,Laptop.class);
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    void deleteAll() {
+         ResponseEntity<Laptop> response = testRestTemplate.exchange("/api/laptops",HttpMethod.DELETE,null,Laptop.class);
+         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
 }

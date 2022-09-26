@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -77,7 +78,7 @@ public class LaptopController {
         return ResponseEntity.ok(result);
     }
 
-    @ApiIgnore("Ignorar este metodo para que no aparezca en la documentacion de la api Swagger")
+  //  @ApiIgnore("Ignorar este metodo para que no aparezca en la documentacion de la api Swagger")
     @DeleteMapping("/api/laptops/{id}")
     @ApiOperation("Borrar un libro en Base de Datos")
     public ResponseEntity<Laptop> delete(@PathVariable Long id) {
@@ -90,7 +91,7 @@ public class LaptopController {
         return ResponseEntity.noContent().build();
     }
 
-    @ApiIgnore("Ignorar este metodo para que no aparezca en la documentacion de la api Swagger")
+  //  @ApiIgnore("Ignorar este metodo para que no aparezca en la documentacion de la api Swagger")
     @DeleteMapping("/api/laptops")
     @ApiOperation("Borrar todos los libros de la Base de Datos")
     public ResponseEntity<Laptop> deleteAll() {
