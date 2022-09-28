@@ -4,6 +4,7 @@ import com.applaptop.springapplaptop.entities.Laptop;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -26,6 +27,9 @@ class LaptopControllerTest {
     @LocalServerPort
     private int port;
 
+    @Value("${app.messagetest}")
+    String messagetest;
+
     @BeforeEach
     void setUp(){
         restTemplateBuilder = restTemplateBuilder.rootUri("http://localhost:" + port);
@@ -34,6 +38,7 @@ class LaptopControllerTest {
 
     @Test
     void hello() {
+        System.out.println(messagetest);
         ResponseEntity<String>  response = testRestTemplate.getForEntity("/hello",String.class);
 
         assertEquals(HttpStatus.OK,response.getStatusCode());

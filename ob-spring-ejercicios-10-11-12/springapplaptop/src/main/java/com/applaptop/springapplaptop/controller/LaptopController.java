@@ -4,9 +4,9 @@ import com.applaptop.springapplaptop.entities.Laptop;
 import com.applaptop.springapplaptop.repository.LaptopRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -23,11 +23,21 @@ public class LaptopController {
 
     private LaptopRepository laptopRepository;
 
+    @Value("${app.varexample}")
+    String varexample;
+
     public LaptopController(LaptopRepository laptopRepository) {
 
         this.laptopRepository = laptopRepository;
     }
 
+    @Value("${app.messagedev}")
+    String messagedev;
+    @GetMapping("/hola")
+    public String hello(){
+        System.out.println(messagedev);
+        return "Hello my friend!";
+    }
     @GetMapping("/api/laptops")
     @ApiOperation("Listar los libros de la Base de Datos")
     public List<Laptop> findAll() {
@@ -38,6 +48,7 @@ public class LaptopController {
     @GetMapping("/api/laptops/{id}")
     @ApiOperation("Buscar un libro por clave primaria id Long")
     public ResponseEntity<Laptop> findOneById(@ApiParam("Clave primaria tipo Long") @PathVariable Long id) {
+        System.out.println(varexample);
        Optional<Laptop> laptopOpt = laptopRepository.findById(id);
 
        if(laptopOpt.isPresent()) {
